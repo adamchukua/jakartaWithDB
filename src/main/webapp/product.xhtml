@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: adamc
+  Date: 23.10.2023
+  Time: 10:11
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Product Page</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h:outputLabel for="title" value="Title:" />
+        <h:inputText id="title" value="#{productController.product.title}" />
+        <br/>
+
+        <h:outputLabel for="description" value="Description:" />
+        <h:inputText id="description" value="#{productController.product.description}" />
+        <br/>
+
+        <h:commandButton value="Save Product" action="#{productController.saveProduct}" />
+    </h:form>
+
+    <h:dataTable value="#{productController.getAllProducts()}" var="product">
+        <h:column>
+            <f:facet name="header">Title</f:facet>
+            #{product.title}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Description</f:facet>
+            #{product.description}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Actions</f:facet>
+
+            <h:link outcome="edit-product">
+                <f:param name="id" value="#{product.id}" />
+                <h:outputText value="Edit" />
+            </h:link>
+
+            <h:form>
+                <h:commandButton value="Delete" action="#{productController.deleteProduct(product.id)}" />
+            </h:form>
+        </h:column>
+    </h:dataTable>
+</h:body>
+</html>
